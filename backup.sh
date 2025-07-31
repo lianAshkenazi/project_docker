@@ -9,10 +9,8 @@ MYSQL_CONTAINER="my-mysql"
 JOOMLA_CONTAINER="my-joomla"
 MYSQL_ROOT_PASSWORD="my-secret-pw"
 MYSQL_DATABASE="joomla_db"
-GIT_REPO_DIR="."        # Local git repo directory (adjust if needed)
-GIT_COMMIT_MSG="Backup on $TIMESTAMP"
 
-# Ensure backup directory exists
+# Create backup directory if not exists
 mkdir -p $BACKUP_DIR
 
 echo "📦 Backing up Joomla + MySQL..."
@@ -30,7 +28,7 @@ else
   exit 1
 fi
 
-# Step 2: Backup Joomla site files
+# Step 2: Backup Joomla site files (from container path /var/www/html)
 echo "🗃️  Backing up Joomla site files from container..."
 docker exec $JOOMLA_CONTAINER tar czf - /var/www/html > $FILES_BACKUP
 
@@ -41,20 +39,5 @@ else
   exit 1
 fi
 
-# Step 3: Commit and push to Git
-echo "🔧 Adding backup files to Git repository..."
-
-cd $GIT_REPO_DIR || { echo "❌ Git repo directory not found!"; exit 1; }
-
-git add $SQL_FILE $FILES_BACKUP
-
-git commit -m "$GIT_COMMIT_MSG"
-
-if git push; then
-  echo "✅ Backup files pushed to Git successfully!"
-else
-  echo "❌ Failed to push backup files to Git."
-  exit 1
-fi
-
-echo "🎉 Backup and push complete."
+# Final message
+echo "🎉 Backup completed at $TIMESTAMP"
