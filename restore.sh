@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # === CONFIGURATION ===
-GIT_REPO="https://github.com/your-username/joomla-backup.git"
+GIT_REPO="https://github.com/lianAshkenazi/project_docker/tree/backup"
 CLONE_DIR="joomla-restore"
 MYSQL_CONTAINER="my-mysql"
 JOOMLA_CONTAINER="my-joomla"
