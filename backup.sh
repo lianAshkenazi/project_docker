@@ -17,9 +17,8 @@ echo "📦 Backing up Joomla + MySQL..."
 
 # Step 1: Backup MySQL database
 echo "🗄️  Dumping MySQL database..."
-export MYSQL_PWD=$MYSQL_ROOT_PASSWORD
 docker exec $MYSQL_CONTAINER \
-  mysqldump -uroot $MYSQL_DATABASE > $SQL_FILE
+  mysqldump -uroot -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE > $SQL_FILE
 
 if [ $? -eq 0 ]; then
   echo "✅ MySQL database saved to $SQL_FILE"

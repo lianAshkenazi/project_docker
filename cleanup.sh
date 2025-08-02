@@ -14,10 +14,10 @@ if [[ "$CONFIRM" != "y" ]]; then
 fi
 
 echo "🗑️ Stopping and removing containers..."
-docker rm -f $JOOMLA_CONTAINER $MYSQL_CONTAINER 2>/dev/null
+docker container prune -f
 
 echo "🔌 Removing Docker network..."
-docker network rm $NETWORK_NAME 2>/dev/null
+docker network prune -f
 
 # Optional: remove backup files
 read -p "Do you also want to delete the backup files in '$BACKUP_DIR'? (y/n): " DELETE_BACKUPS
